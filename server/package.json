@@ -7,7 +7,10 @@
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc --project tsconfig.json",
-    "create-admin": "ts-node src/scripts/createAdmin.ts"
+    "create-admin": "ts-node src/scripts/createAdmin.ts",
+    "list-users": "ts-node src/scripts/listUsers.ts",
+    "update-admin": "ts-node src/scripts/updateAdmin.ts",
+    "reset-admin-password": "ts-node src/scripts/resetAdminPassword.ts"
   },
   "keywords": [],
   "author": "",
