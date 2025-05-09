@@ -6,11 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc --project tsconfig.json",
-    "create-admin": "ts-node src/scripts/createAdmin.ts",
-    "list-users": "ts-node src/scripts/listUsers.ts",
-    "update-admin": "ts-node src/scripts/updateAdmin.ts",
-    "reset-admin-password": "ts-node src/scripts/resetAdminPassword.ts"
+    "build": "tsc --project tsconfig.json"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +27,8 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.15.11",
+    "@types/node-fetch": "^2.6.12",
+    "node-fetch": "^2.7.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.3"
