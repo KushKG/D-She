@@ -1,5 +1,5 @@
-import express from 'express';
-import multer from 'multer';
+import express, { Request, Response } from 'express';
+import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import { Product } from '../models/Product';
 import { auth } from '../middleware/auth';
@@ -8,17 +8,17 @@ const router = express.Router();
 
 // Configure multer for image upload
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
     cb(null, 'uploads/');
   },
-  filename: (req, file, cb) => {
+  filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
 const upload = multer({
   storage,
-  fileFilter: (req, file, cb) => {
+  fileFilter: (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
     const allowedTypes = /jpeg|jpg|png|webp/;
     const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = allowedTypes.test(file.mimetype);
@@ -31,7 +31,7 @@ const upload = multer({
 });
 
 // Get all products (public)
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const { style, search } = req.query;
     let query: any = {};
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get single product (public)
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
@@ -65,10 +65,12 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create product (protected route)
-router.post('/', auth, upload.array('images', 5), async (req: any, res) => {
+router.post('/', auth, upload.array('images', 5), async (req: Request, res: Response) => {
   try {
     const { name, description, price, measurements, fit, style, tags } = req.body;
-    const images = req.files.map((file: any) => file.path);
+    const files = req.files as Express.Multer.File[];
+    const images = files.map((file) => file.path);
+    
     const product = new Product({
       name,
       description,
@@ -89,7 +91,7 @@ router.post('/', auth, upload.array('images', 5), async (req: any, res) => {
 });
 
 // Update product (protected route)
-router.put('/:id', auth, upload.array('images', 5), async (req: any, res) => {
+router.put('/:id', auth, upload.array('images', 5), async (req: Request, res: Response) => {
   try {
     const { name, description, price, measurements, fit, style, tags } = req.body;
     const updateData: any = {
@@ -102,8 +104,10 @@ router.put('/:id', auth, upload.array('images', 5), async (req: any, res) => {
       tags: JSON.parse(tags),
     };
 
-    if (req.files && req.files.length > 0) {
-      updateData.images = req.files.map((file: any) => file.path);
+    const files = req.files as Express.Multer.File[];
+    
+    if (files && files.length > 0) {
+      updateData.images = files.map((file) => file.path);
     }
 
     const product = await Product.findByIdAndUpdate(
@@ -124,7 +128,7 @@ router.put('/:id', auth, upload.array('images', 5), async (req: any, res) => {
 });
 
 // Delete product (protected route)
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, async (req: Request, res: Response) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
     if (!product) {
