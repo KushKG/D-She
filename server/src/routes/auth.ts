@@ -21,12 +21,12 @@ router.post('/register', async (req: Request, res: Response) => {
 
     // Generate token
     const token = jwt.sign(
-      { _id: user._id },
+      { _id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET || 'your-super-secret-jwt-key',
       { expiresIn: '24h' }
     );
 
-    res.status(201).json({ token });
+    res.status(201).json({ token, isAdmin: user.isAdmin });
   } catch (error) {
     res.status(500).json({ message: 'Error creating user' });
   }
@@ -51,14 +51,35 @@ router.post('/login', async (req: Request, res: Response) => {
 
     // Generate token
     const token = jwt.sign(
-      { _id: user._id },
+      { _id: user._id, isAdmin: user.isAdmin },
       process.env.JWT_SECRET || 'your-super-secret-jwt-key',
       { expiresIn: '24h' }
     );
 
-    res.json({ token });
+    res.json({ token, isAdmin: user.isAdmin });
   } catch (error) {
     res.status(500).json({ message: 'Error logging in' });
+  }
+});
+
+// Get current user
+router.get('/me', async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-super-secret-jwt-key') as any;
+    const user = await User.findById(decoded._id).select('-password');
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ user: { ...user.toObject(), isAdmin: decoded.isAdmin } });
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
   }
 });
 

@@ -1,14 +1,13 @@
 {
-  "name": "server",
+  "name": "d-she-server",
   "version": "1.0.0",
-  "description": "Backend server for D-She boutique dress storefront",
+  "description": "D-She e-commerce platform backend",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc",
-    "init-db": "ts-node src/scripts/initDb.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --project tsconfig.json",
+    "create-admin": "ts-node src/scripts/createAdmin.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,12 +22,13 @@
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.18",
-    "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/multer": "^1.4.12",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/multer": "^1.4.7",
     "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.3"
   }
