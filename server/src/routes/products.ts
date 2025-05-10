@@ -1,26 +1,30 @@
 import express, { Request, Response } from 'express';
-import multer, { FileFilterCallback } from 'multer';
-import path from 'path';
+import multer from 'multer';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Product } from '../models/Product';
 import { auth } from '../middleware/auth';
 
 const router = express.Router();
 
-// Configure multer for image upload
-const storage = multer.diskStorage({
-  destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
+// Configure S3 client
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION || 'us-east-1',
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
   },
 });
 
+// Configure multer for memory storage
 const upload = multer({
-  storage,
-  fileFilter: (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|webp/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const extname = allowedTypes.test(file.originalname.toLowerCase());
     const mimetype = allowedTypes.test(file.mimetype);
 
     if (extname && mimetype) {
@@ -29,6 +33,23 @@ const upload = multer({
     cb(new Error('Only image files are allowed!'));
   },
 });
+
+// Helper function to upload image to S3
+const uploadToS3 = async (file: Express.Multer.File): Promise<string> => {
+  const key = `d-she/${Date.now()}-${file.originalname}`;
+  
+  const command = new PutObjectCommand({
+    Bucket: process.env.AWS_S3_BUCKET || '',
+    Key: key,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+  });
+
+  await s3Client.send(command);
+  
+  // Return the S3 URL
+  return `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+};
 
 // Get all products (public)
 router.get('/', async (req: Request, res: Response) => {
@@ -69,13 +90,17 @@ router.post('/', auth, upload.array('images', 5), async (req: Request, res: Resp
   try {
     const { name, description, price, measurements, fit, style, tags } = req.body;
     const files = req.files as Express.Multer.File[];
-    const images = files.map((file) => file.path);
+    
+    // Upload images to S3
+    const imageUrls = await Promise.all(
+      files.map(file => uploadToS3(file))
+    );
     
     const product = new Product({
       name,
       description,
       price,
-      images,
+      images: imageUrls,
       measurements: JSON.parse(measurements),
       fit,
       style,
@@ -107,7 +132,11 @@ router.put('/:id', auth, upload.array('images', 5), async (req: Request, res: Re
     const files = req.files as Express.Multer.File[];
     
     if (files && files.length > 0) {
-      updateData.images = files.map((file) => file.path);
+      // Upload new images to S3
+      const imageUrls = await Promise.all(
+        files.map(file => uploadToS3(file))
+      );
+      updateData.images = imageUrls;
     }
 
     const product = await Product.findByIdAndUpdate(
