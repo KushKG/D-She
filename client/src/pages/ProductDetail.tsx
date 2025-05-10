@@ -92,9 +92,9 @@ const ProductDetail: React.FC = () => {
           <div className="lg:max-w-lg lg:self-end">
             <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
               <img
-                src={`${API_URL.replace('/api', '')}/${product.images[selectedImageIndex]}`}
+                src={product.images[selectedImageIndex].startsWith('http') ? product.images[selectedImageIndex] : `${API_URL}/${product.images[selectedImageIndex]}`}
                 alt={product.name}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover"
               />
               {product.images.length > 1 && (
                 <>
@@ -119,19 +119,15 @@ const ProductDetail: React.FC = () => {
             </div>
             <div className="mt-4 grid grid-cols-4 gap-4">
               {product.images.map((image, index) => (
-                <button
+                <img
                   key={index}
-                  onClick={() => setSelectedImageIndex(index)}
-                  className={`relative aspect-[3/4] rounded-lg overflow-hidden ${
-                    selectedImageIndex === index ? 'ring-2 ring-primary-500' : ''
+                  src={image.startsWith('http') ? image : `${API_URL}/${image}`}
+                  alt={`${product.name} - Image ${index + 1}`}
+                  className={`w-20 h-20 object-cover cursor-pointer ${
+                    selectedImageIndex === index ? 'ring-2 ring-blue-500' : ''
                   }`}
-                >
-                  <img
-                    src={`${API_URL.replace('/api', '')}/${image}`}
-                    alt={`${product.name} ${index + 1}`}
-                    className="w-full h-full object-cover object-center"
-                  />
-                </button>
+                  onClick={() => setSelectedImageIndex(index)}
+                />
               ))}
             </div>
           </div>

@@ -83,9 +83,9 @@ const Home = () => {
                 <div key={product._id} className="group relative">
                   <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                     <img
-                      src={`${API_URL.replace('/api', '')}/${product.images[0]}` || 'https://placehold.co/400x500'}
+                      src={product.images[0]?.startsWith('http') ? product.images[0] : `${API_URL}/${product.images[0]}` || 'https://placehold.co/400x500'}
                       alt={product.name}
-                      className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="mt-4 flex justify-between">
