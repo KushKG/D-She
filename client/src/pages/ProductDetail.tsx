@@ -92,7 +92,7 @@ const ProductDetail: React.FC = () => {
           <div className="lg:max-w-lg lg:self-end">
             <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
               <img
-                src={`http://localhost:5000/${product.images[selectedImageIndex]}`}
+                src={`${API_URL.replace('/api', '')}/${product.images[selectedImageIndex]}`}
                 alt={product.name}
                 className="w-full h-full object-cover object-center"
               />
@@ -127,7 +127,7 @@ const ProductDetail: React.FC = () => {
                   }`}
                 >
                   <img
-                    src={`http://localhost:5000/${image}`}
+                    src={`${API_URL.replace('/api', '')}/${image}`}
                     alt={`${product.name} ${index + 1}`}
                     className="w-full h-full object-cover object-center"
                   />
