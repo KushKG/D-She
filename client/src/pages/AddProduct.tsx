@@ -9,6 +9,7 @@ const AddProduct = () => {
     description: '',
     price: '',
     style: 'Western',
+    material: '',
     measurements: {
       chest: '',
       waist: '',
@@ -33,6 +34,7 @@ const AddProduct = () => {
       formDataToSend.append('description', formData.description);
       formDataToSend.append('price', formData.price);
       formDataToSend.append('style', formData.style);
+      formDataToSend.append('material', formData.material);
       formDataToSend.append('measurements', JSON.stringify({
         chest: Number(formData.measurements.chest),
         waist: Number(formData.measurements.waist),
@@ -248,6 +250,22 @@ const AddProduct = () => {
               />
             </div>
           </div>
+        </div>
+
+        <div>
+          <label htmlFor="material" className="block text-sm font-medium text-gray-700">
+            Material
+          </label>
+          <input
+            type="text"
+            id="material"
+            name="material"
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            value={formData.material}
+            onChange={handleChange}
+            placeholder="e.g., Cotton, Silk, Polyester"
+          />
         </div>
 
         <div>

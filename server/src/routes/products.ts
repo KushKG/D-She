@@ -107,7 +107,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 // Create product (protected route)
 router.post('/', auth, upload.array('images', 5), async (req: Request, res: Response) => {
   try {
-    const { name, description, price, measurements, fit, style, tags } = req.body;
+    const { name, description, price, measurements, fit, style, tags, material } = req.body;
     const files = req.files as Express.Multer.File[];
     
     // Upload images to S3
@@ -124,6 +124,7 @@ router.post('/', auth, upload.array('images', 5), async (req: Request, res: Resp
       fit,
       style,
       tags: JSON.parse(tags),
+      material,
     });
 
     await product.save();
@@ -137,7 +138,7 @@ router.post('/', auth, upload.array('images', 5), async (req: Request, res: Resp
 // Update product (protected route)
 router.put('/:id', auth, upload.array('images', 5), async (req: Request, res: Response) => {
   try {
-    const { name, description, price, measurements, fit, style, tags } = req.body;
+    const { name, description, price, measurements, fit, style, tags, material } = req.body;
     const updateData: any = {
       name,
       description,
@@ -146,11 +147,17 @@ router.put('/:id', auth, upload.array('images', 5), async (req: Request, res: Re
       fit,
       style,
       tags: JSON.parse(tags),
+      material,
     };
 
     const files = req.files as Express.Multer.File[];
     
     if (files && files.length > 0) {
+      // Delete old images from S3
+      await Promise.all(
+        req.body.images.map((imageUrl: string) => deleteFromS3(imageUrl))
+      );
+      
       // Upload new images to S3
       const imageUrls = await Promise.all(
         files.map(file => uploadToS3(file))

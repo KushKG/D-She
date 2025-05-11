@@ -7,9 +7,9 @@ interface Product {
   name: string;
   price: number;
   images: string[];
-  category: string;
+  style: string;
+  material: string;
   description: string;
-  sizes: string[];
 }
 
 const AdminDashboard = () => {
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
         <div className="sm:flex-auto">
           <h1 className="text-3xl font-bold text-gray-900">Products</h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all dresses in your store including their name, price, and category.
+            A list of all dresses in your store including their name, price, style, and material.
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -121,7 +121,10 @@ const AdminDashboard = () => {
                       Price
                     </th>
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Category
+                      Style
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Material
                     </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Actions</span>
@@ -149,7 +152,10 @@ const AdminDashboard = () => {
                         ${product.price}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {product.category}
+                        {product.style}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {product.material}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <button
