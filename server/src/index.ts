@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import authRoutes from './routes/auth';
 import productRoutes from './routes/products';
+import contactRoutes from './routes/contact';
 
 // Load environment variables
 dotenv.config();
@@ -33,6 +34,7 @@ mongoose
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

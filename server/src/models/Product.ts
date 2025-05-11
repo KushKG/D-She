@@ -13,6 +13,7 @@ export interface IProduct extends mongoose.Document {
   fit: 'Relaxed' | 'Normal' | 'Fitted';
   style: 'Indian' | 'Western' | 'Indo Western';
   tags: string[];
+  material: string;
 }
 
 const productSchema = new mongoose.Schema({
@@ -67,6 +68,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     trim: true,
   }],
+  material: {
+    type: String,
+    required: true,
+  },
 }, {
   timestamps: true,
 });
