@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import multer from 'multer';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Product } from '../models/Product';
 import { auth } from '../middleware/auth';
@@ -49,6 +49,25 @@ const uploadToS3 = async (file: Express.Multer.File): Promise<string> => {
   
   // Return the S3 URL
   return `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+};
+
+// Helper function to delete image from S3
+const deleteFromS3 = async (imageUrl: string): Promise<void> => {
+  try {
+    // Extract the key from the S3 URL
+    const url = new URL(imageUrl);
+    const key = url.pathname.substring(1); // Remove leading slash
+
+    const command = new DeleteObjectCommand({
+      Bucket: process.env.AWS_S3_BUCKET || '',
+      Key: key,
+    });
+
+    await s3Client.send(command);
+  } catch (error) {
+    console.error('Error deleting image from S3:', error);
+    throw error;
+  }
 };
 
 // Get all products (public)
@@ -159,12 +178,22 @@ router.put('/:id', auth, upload.array('images', 5), async (req: Request, res: Re
 // Delete product (protected route)
 router.delete('/:id', auth, async (req: Request, res: Response) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    res.json({ message: 'Product deleted successfully' });
+
+    // Delete all images from S3
+    await Promise.all(
+      product.images.map(imageUrl => deleteFromS3(imageUrl))
+    );
+
+    // Delete the product from database
+    await Product.findByIdAndDelete(req.params.id);
+    
+    res.json({ message: 'Product and associated images deleted successfully' });
   } catch (error) {
+    console.error('Error deleting product:', error);
     res.status(500).json({ message: 'Error deleting product' });
   }
 });
