@@ -139,7 +139,7 @@ const AdminDashboard = () => {
                           <div className="h-10 w-10 flex-shrink-0">
                             <img
                               className="h-10 w-10 rounded-full object-cover"
-                              src={`${API_URL.replace('/api', '')}/${product.images[0]}`}
+                              src={product.images[0]}
                               alt={product.name}
                             />
                           </div>
