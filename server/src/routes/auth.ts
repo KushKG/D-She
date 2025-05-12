@@ -49,10 +49,16 @@ router.post('/login', async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    // Get JWT secret from environment variables
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+
     // Generate token
     const token = jwt.sign(
       { _id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT_SECRET || 'your-super-secret-jwt-key',
+      secret,
       { expiresIn: '24h' }
     );
 
@@ -70,7 +76,13 @@ router.get('/me', async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'No token provided' });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-super-secret-jwt-key') as any;
+    // Get JWT secret from environment variables
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+
+    const decoded = jwt.verify(token, secret) as any;
     const user = await User.findById(decoded._id).select('-password');
     
     if (!user) {
