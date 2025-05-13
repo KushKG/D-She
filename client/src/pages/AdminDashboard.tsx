@@ -150,73 +150,74 @@ const AdminDashboard = () => {
 
   if (isAuthenticated && !isLoading) {
     return (
-      <div className="relative min-h-screen max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pb-24 pt-8">
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+      <div className="relative min-h-screen max-w-7xl mx-auto px-2 sm:px-4 md:px-8 pb-24 pt-8">
+        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-earth-800 font-proxima mb-2">Products</h1>
-              <p className="text-sm text-earth-600 font-proxima">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-earth-800 font-proxima mb-2">Products</h1>
+              <p className="text-xs sm:text-sm text-earth-600 font-proxima">
                 A list of all dresses in your store including their name, price, style, and material.
               </p>
             </div>
             <button
               type="button"
               onClick={() => navigate('/admin/products/new')}
-              className="inline-flex items-center justify-center rounded-md border border-transparent bg-earth-600 px-5 py-2 text-base font-semibold text-white shadow-sm hover:bg-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 focus:ring-offset-2 mt-4 sm:mt-0"
+              className="inline-flex items-center justify-center rounded-md border border-transparent bg-earth-600 px-4 sm:px-5 py-2 text-sm sm:text-base font-semibold text-white shadow-sm hover:bg-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 focus:ring-offset-2 mt-2 sm:mt-0 min-h-[44px]"
             >
               Add Product
             </button>
           </div>
           {error && (
-            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded font-proxima">
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded font-proxima text-xs sm:text-sm">
               {error}
             </div>
           )}
           <div className="overflow-x-auto rounded-xl shadow ring-1 ring-black ring-opacity-5">
-            <table className="min-w-full divide-y divide-earth-200">
+            <table className="min-w-full divide-y divide-earth-200 text-xs sm:text-sm">
               <thead className="bg-earth-100">
                 <tr>
-                  <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-earth-700 sm:pl-6">Product</th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Price</th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Style</th>
-                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Material</th>
-                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-earth-700">Favorite</th>
-                  <th className="relative py-3.5 pl-3 pr-4 sm:pr-6" />
+                  <th className="py-2 sm:py-3.5 pl-2 sm:pl-4 pr-2 sm:pr-3 text-left font-semibold text-earth-700">Product</th>
+                  <th className="px-2 sm:px-3 py-2 sm:py-3.5 text-left font-semibold text-earth-700">Price</th>
+                  <th className="px-2 sm:px-3 py-2 sm:py-3.5 text-left font-semibold text-earth-700">Style</th>
+                  <th className="px-2 sm:px-3 py-2 sm:py-3.5 text-left font-semibold text-earth-700">Material</th>
+                  <th className="px-2 sm:px-3 py-2 sm:py-3.5 text-center font-semibold text-earth-700">Favorite</th>
+                  <th className="relative py-2 sm:py-3.5 pl-2 sm:pl-3 pr-2 sm:pr-4" />
                 </tr>
               </thead>
               <tbody className="divide-y divide-earth-200 bg-white">
                 {products.map((product) => (
                   <tr key={product._id} className="hover:bg-earth-50 transition-colors">
-                    <td className="whitespace-nowrap py-6 pl-4 pr-3 text-sm sm:pl-6 flex items-center gap-3">
+                    <td className="whitespace-nowrap py-4 sm:py-6 pl-2 sm:pl-4 pr-2 sm:pr-3 flex items-center gap-2 sm:gap-3">
                       <img
-                        className="h-12 w-12 rounded-lg object-cover border border-earth-100 shadow-sm"
+                        className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg object-cover border border-earth-100 shadow-sm"
                         src={product.images[0]}
                         alt={product.name}
                       />
-                      <span className="font-medium text-earth-900 font-proxima truncate max-w-[120px]">{product.name}</span>
+                      <span className="font-medium text-earth-900 font-proxima truncate max-w-[80px] sm:max-w-[120px]">{product.name}</span>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700 font-proxima">
+                    <td className="whitespace-nowrap px-2 sm:px-3 py-2 sm:py-4 text-earth-700 font-proxima">
                       ${product.price}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700 font-proxima">
+                    <td className="whitespace-nowrap px-2 sm:px-3 py-2 sm:py-4 text-earth-700 font-proxima">
                       {product.style}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700 font-proxima">
+                    <td className="whitespace-nowrap px-2 sm:px-3 py-2 sm:py-4 text-earth-700 font-proxima">
                       {product.material}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-center text-2xl">
+                    <td className="whitespace-nowrap px-2 sm:px-3 py-2 sm:py-4 text-center text-xl sm:text-2xl">
                       <button
                         onClick={() => toggleFavorite(product._id, product.favorite)}
-                        className={`focus:outline-none ${product.favorite ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-600`}
+                        className={`focus:outline-none ${product.favorite ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-600 min-w-[44px] min-h-[44px]`}
                         title={product.favorite ? 'Unfavorite' : 'Mark as favorite'}
+                        aria-label={product.favorite ? 'Unfavorite' : 'Mark as favorite'}
                       >
                         {product.favorite ? '★' : '☆'}
                       </button>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-right text-sm ">
+                    <td className="whitespace-nowrap px-2 sm:px-3 py-2 sm:py-4 text-right">
                       <button
                         onClick={() => navigate(`/admin/products/${product._id}/edit`)}
-                        className="text-earth-600 hover:text-earth-900 font-semibold px-3 py-1 rounded transition-colors"
+                        className="text-earth-600 hover:text-earth-900 font-semibold px-2 sm:px-3 py-1 rounded transition-colors min-h-[36px]"
                       >
                         Edit
                       </button>
@@ -239,7 +240,7 @@ const AdminDashboard = () => {
                             setError('An error occurred while deleting the product');
                           }
                         }}
-                        className="text-red-600 hover:text-red-900 font-semibold px-3 py-1 rounded transition-colors"
+                        className="text-red-600 hover:text-red-900 font-semibold px-2 sm:px-3 py-1 rounded transition-colors min-h-[36px]"
                       >
                         Delete
                       </button>
@@ -250,10 +251,10 @@ const AdminDashboard = () => {
             </table>
           </div>
         </div>
-        <div className="absolute right-8 bottom-8">
+        <div className="absolute right-4 sm:right-8 bottom-4 sm:bottom-8">
           <button
             onClick={handleLogout}
-            className="btn btn-secondary font-proxima shadow-lg"
+            className="btn btn-secondary font-proxima shadow-lg min-h-[44px] min-w-[44px]"
           >
             Log out
           </button>

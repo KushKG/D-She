@@ -132,54 +132,54 @@ const EditProduct = () => {
   }
 
   return (
-    <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-8 mt-12">
-      <h2 className="text-2xl font-bold text-earth-800 mb-6 font-proxima">Edit Product</h2>
-      {error && <div className="mb-4 text-red-600 font-proxima">{error}</div>}
-      {success && <div className="mb-4 text-green-600 font-proxima">{success}</div>}
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-4 sm:p-8 mt-8 sm:mt-12">
+      <h2 className="text-xl sm:text-2xl font-bold text-earth-800 mb-4 sm:mb-6 font-proxima">Edit Product</h2>
+      {error && <div className="mb-4 text-red-600 font-proxima text-xs sm:text-sm">{error}</div>}
+      {success && <div className="mb-4 text-green-600 font-proxima text-xs sm:text-sm">{success}</div>}
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div>
-          <label className="block text-sm font-medium text-earth-700 mb-1 font-proxima">Name</label>
+          <label className="block text-xs sm:text-sm font-medium text-earth-700 mb-1 font-proxima">Name</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="input"
+            className="input w-full min-h-[44px] text-xs sm:text-sm"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-earth-700 mb-1 font-proxima">Description</label>
+          <label className="block text-xs sm:text-sm font-medium text-earth-700 mb-1 font-proxima">Description</label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="input"
+            className="input w-full text-xs sm:text-sm"
             rows={3}
             required
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
           <div>
-            <label className="block text-sm font-medium text-earth-700 mb-1 font-proxima">Price</label>
+            <label className="block text-xs sm:text-sm font-medium text-earth-700 mb-1 font-proxima">Price</label>
             <input
               type="number"
               name="price"
               value={formData.price}
               onChange={handleChange}
-              className="input"
+              className="input w-full min-h-[44px] text-xs sm:text-sm"
               min="0"
               step="0.01"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-earth-700 mb-1 font-proxima">Style</label>
+            <label className="block text-xs sm:text-sm font-medium text-earth-700 mb-1 font-proxima">Style</label>
             <select
               name="style"
               value={formData.style}
               onChange={handleChange}
-              className="input"
+              className="input w-full min-h-[44px] text-xs sm:text-sm"
               required
             >
               {styleOptions.map(option => (
@@ -189,23 +189,23 @@ const EditProduct = () => {
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-earth-700 mb-1 font-proxima">Material</label>
+          <label className="block text-xs sm:text-sm font-medium text-earth-700 mb-1 font-proxima">Material</label>
           <input
             type="text"
             name="material"
             value={formData.material}
             onChange={handleChange}
-            className="input"
+            className="input w-full min-h-[44px] text-xs sm:text-sm"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-earth-700 mb-1 font-proxima">Fit</label>
+          <label className="block text-xs sm:text-sm font-medium text-earth-700 mb-1 font-proxima">Fit</label>
           <select
             name="fit"
             value={formData.fit}
             onChange={handleChange}
-            className="input"
+            className="input w-full min-h-[44px] text-xs sm:text-sm"
             required
           >
             {fitOptions.map(option => (
@@ -214,8 +214,8 @@ const EditProduct = () => {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-earth-700 mb-1 font-proxima">Measurements (inches)</label>
-          <div className="grid grid-cols-3 gap-4">
+          <label className="block text-xs sm:text-sm font-medium text-earth-700 mb-1 font-proxima">Measurements (inches)</label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
             <div>
               <label className="block text-xs text-earth-600 mb-1">Chest</label>
               <input
@@ -223,7 +223,7 @@ const EditProduct = () => {
                 name="measurements.chest"
                 value={formData.measurements.chest}
                 onChange={handleChange}
-                className="input"
+                className="input w-full min-h-[44px] text-xs sm:text-sm"
                 min="0"
                 step="0.1"
                 required
@@ -236,7 +236,7 @@ const EditProduct = () => {
                 name="measurements.waist"
                 value={formData.measurements.waist}
                 onChange={handleChange}
-                className="input"
+                className="input w-full min-h-[44px] text-xs sm:text-sm"
                 min="0"
                 step="0.1"
                 required
@@ -249,7 +249,7 @@ const EditProduct = () => {
                 name="measurements.length"
                 value={formData.measurements.length}
                 onChange={handleChange}
-                className="input"
+                className="input w-full min-h-[44px] text-xs sm:text-sm"
                 min="0"
                 step="0.1"
                 required
@@ -266,10 +266,10 @@ const EditProduct = () => {
             id="favorite"
             className="form-checkbox h-5 w-5 text-yellow-500"
           />
-          <label htmlFor="favorite" className="text-sm font-medium text-earth-700 font-proxima">Mark as Handpicked Favorite</label>
+          <label htmlFor="favorite" className="text-xs sm:text-sm font-medium text-earth-700 font-proxima">Mark as Handpicked Favorite</label>
         </div>
         <div className="flex justify-end">
-          <button type="submit" className="btn btn-primary font-proxima">Save Changes</button>
+          <button type="submit" className="btn btn-primary font-proxima w-full min-h-[44px] text-xs sm:text-sm">Save Changes</button>
         </div>
       </form>
     </div>

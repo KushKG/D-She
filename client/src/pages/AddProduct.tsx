@@ -100,18 +100,18 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Add New Product</h1>
+    <div className="max-w-2xl mx-auto px-2 sm:px-4 md:px-8 py-6 sm:py-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Add New Product</h1>
 
       {error && (
-        <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
+        <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded text-xs sm:text-sm">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700">
             Name
           </label>
           <input
@@ -119,14 +119,14 @@ const AddProduct = () => {
             id="name"
             name="name"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
             value={formData.name}
             onChange={handleChange}
           />
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="description" className="block text-xs sm:text-sm font-medium text-gray-700">
             Description
           </label>
           <textarea
@@ -134,14 +134,14 @@ const AddProduct = () => {
             name="description"
             required
             rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm"
             value={formData.description}
             onChange={handleChange}
           />
         </div>
 
         <div>
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="price" className="block text-xs sm:text-sm font-medium text-gray-700">
             Price
           </label>
           <div className="mt-1 relative rounded-md shadow-sm">
@@ -155,7 +155,7 @@ const AddProduct = () => {
               required
               min="0"
               step="0.01"
-              className="block w-full pl-7 rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+              className="block w-full pl-7 rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
               value={formData.price}
               onChange={handleChange}
             />
@@ -163,14 +163,14 @@ const AddProduct = () => {
         </div>
 
         <div>
-          <label htmlFor="style" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="style" className="block text-xs sm:text-sm font-medium text-gray-700">
             Style
           </label>
           <select
             id="style"
             name="style"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
             value={formData.style}
             onChange={handleChange}
           >
@@ -181,14 +181,14 @@ const AddProduct = () => {
         </div>
 
         <div>
-          <label htmlFor="fit" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="fit" className="block text-xs sm:text-sm font-medium text-gray-700">
             Fit
           </label>
           <select
             id="fit"
             name="fit"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
             value={formData.fit}
             onChange={handleChange}
           >
@@ -199,10 +199,10 @@ const AddProduct = () => {
         </div>
 
         <div>
-          <h3 className="text-sm font-medium text-gray-700 mb-4">Measurements (in inches)</h3>
-          <div className="grid grid-cols-3 gap-4">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-700 mb-2 sm:mb-4">Measurements (in inches)</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
             <div>
-              <label htmlFor="chest" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="chest" className="block text-xs sm:text-sm font-medium text-gray-700">
                 Chest
               </label>
               <input
@@ -212,13 +212,13 @@ const AddProduct = () => {
                 required
                 min="0"
                 step="0.1"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
                 value={formData.measurements.chest}
                 onChange={handleChange}
               />
             </div>
             <div>
-              <label htmlFor="waist" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="waist" className="block text-xs sm:text-sm font-medium text-gray-700">
                 Waist
               </label>
               <input
@@ -228,13 +228,13 @@ const AddProduct = () => {
                 required
                 min="0"
                 step="0.1"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
                 value={formData.measurements.waist}
                 onChange={handleChange}
               />
             </div>
             <div>
-              <label htmlFor="length" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="length" className="block text-xs sm:text-sm font-medium text-gray-700">
                 Length
               </label>
               <input
@@ -244,7 +244,7 @@ const AddProduct = () => {
                 required
                 min="0"
                 step="0.1"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
                 value={formData.measurements.length}
                 onChange={handleChange}
               />
@@ -253,7 +253,7 @@ const AddProduct = () => {
         </div>
 
         <div>
-          <label htmlFor="material" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="material" className="block text-xs sm:text-sm font-medium text-gray-700">
             Material
           </label>
           <input
@@ -261,104 +261,39 @@ const AddProduct = () => {
             id="material"
             name="material"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-xs sm:text-sm min-h-[44px]"
             value={formData.material}
             onChange={handleChange}
             placeholder="e.g., Cotton, Silk, Polyester"
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Images</label>
-          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-            <div className="space-y-1 text-center">
-              <svg
-                className="mx-auto h-12 w-12 text-gray-400"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 48 48"
-                aria-hidden="true"
-              >
-                <path
-                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <div className="flex text-sm text-gray-600">
-                <label
-                  htmlFor="file-upload"
-                  className="relative cursor-pointer bg-white rounded-md font-medium text-primary-600 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
-                >
-                  <span>Upload files</span>
-                  <input
-                    id="file-upload"
-                    name="file-upload"
-                    type="file"
-                    className="sr-only"
-                    multiple
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    ref={fileInputRef}
-                  />
-                </label>
-                <p className="pl-1">or drag and drop</p>
-              </div>
-              <p className="text-xs text-gray-500">PNG, JPG, WEBP up to 5 files</p>
+        <div className="flex flex-wrap gap-2">
+          {images.map((image, idx) => (
+            <div key={idx} className="relative w-20 h-20 rounded overflow-hidden border border-gray-200">
+              <img src={URL.createObjectURL(image)} alt="Preview" className="w-full h-full object-cover" />
+              <button type="button" onClick={() => removeImage(idx)} className="absolute top-1 right-1 bg-white rounded-full p-1 text-xs shadow">×</button>
             </div>
-          </div>
+          ))}
+        </div>
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImageChange}
+            ref={fileInputRef}
+            className="block w-full text-xs sm:text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs sm:file:text-sm file:bg-earth-50 file:text-earth-700 hover:file:bg-earth-100"
+          />
         </div>
 
-        {images.length > 0 && (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {images.map((image, index) => (
-              <div key={index} className="relative">
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt={`Preview ${index + 1}`}
-                  className="h-24 w-24 object-cover rounded-lg"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeImage(index)}
-                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 focus:outline-none"
-                >
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className="flex justify-end space-x-4">
-          <button
-            type="button"
-            onClick={() => navigate('/admin')}
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-          >
-            {isLoading ? 'Creating...' : 'Create Product'}
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="w-full bg-earth-600 text-white font-semibold rounded-md py-3 mt-2 hover:bg-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 focus:ring-offset-2 min-h-[44px]"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Adding...' : 'Add Product'}
+        </button>
       </form>
     </div>
   );
