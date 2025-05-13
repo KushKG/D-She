@@ -40,11 +40,6 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <div className="flex items-center space-x-6">
-            <Link to="/login" className="text-base font-normal text-earth-800 hover:text-earth-600 uppercase tracking-wide font-proxima">
-              Login
-            </Link>
-          </div>
         </div>
       </div>
     </nav>
