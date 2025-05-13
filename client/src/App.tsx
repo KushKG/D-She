@@ -5,6 +5,7 @@ import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import AdminDashboard from './pages/AdminDashboard';
 import AddProduct from './pages/AddProduct';
+import EditProduct from './pages/EditProduct';
 import Login from './pages/Login';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/products/new" element={<AddProduct />} />
+            <Route path="/admin/products/:id/edit" element={<EditProduct />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         </main>
