@@ -150,123 +150,110 @@ const AdminDashboard = () => {
 
   if (isAuthenticated && !isLoading) {
     return (
-      <div className="relative min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="sm:flex sm:items-center">
-          <div className="sm:flex-auto">
-            <h1 className="text-3xl font-bold text-earth-800">Products</h1>
-            <p className="mt-2 text-sm text-earth-700">
-              A list of all dresses in your store including their name, price, style, and material.
-            </p>
-          </div>
-          <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <div className="relative min-h-screen max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pb-24 pt-8">
+        <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-earth-800 font-proxima mb-2">Products</h1>
+              <p className="text-sm text-earth-600 font-proxima">
+                A list of all dresses in your store including their name, price, style, and material.
+              </p>
+            </div>
             <button
               type="button"
               onClick={() => navigate('/admin/products/new')}
-              className="inline-flex items-center justify-center rounded-md border border-transparent bg-earth-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 focus:ring-offset-2 sm:w-auto"
+              className="inline-flex items-center justify-center rounded-md border border-transparent bg-earth-600 px-5 py-2 text-base font-semibold text-white shadow-sm hover:bg-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 focus:ring-offset-2 mt-4 sm:mt-0"
             >
-              Add product
+              Add Product
             </button>
           </div>
-        </div>
-
-        {error && (
-          <div className="mt-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
-            {error}
-          </div>
-        )}
-
-        <div className="mt-8 flex flex-col">
-          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-earth-200">
-                  <thead className="bg-earth-100">
-                    <tr>
-                      <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-earth-700 sm:pl-6">Product</th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Price</th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Style</th>
-                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Material</th>
-                      <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                        <span className="sr-only">Edit</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-earth-200 bg-white">
-                    {products.map((product) => (
-                      <tr key={product._id}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                          <div className="flex items-center">
-                            <div className="h-10 w-10 flex-shrink-0">
-                              <img
-                                className="h-10 w-10 rounded-full object-cover"
-                                src={product.images[0]}
-                                alt={product.name}
-                              />
-                            </div>
-                            <div className="ml-4">
-                              <div className="font-medium text-earth-900">{product.name}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700">
-                          ${product.price}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700">
-                          {product.style}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700">
-                          {product.material}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm font-medium flex items-center justify-end space-x-2">
-                          <button
-                            onClick={() => toggleFavorite(product._id, product.favorite)}
-                            className={`mr-2 text-2xl focus:outline-none ${product.favorite ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-600`}
-                            title={product.favorite ? 'Unfavorite' : 'Mark as favorite'}
-                          >
-                            {product.favorite ? '★' : '☆'}
-                          </button>
-                          <button
-                            onClick={() => navigate(`/admin/products/${product._id}/edit`)}
-                            className="text-earth-600 hover:text-earth-900 mr-4"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={async () => {
-                              if (!window.confirm('Are you sure you want to delete this product?')) return;
-                              try {
-                                const response = await fetch(`${API_URL}/products/${product._id}`, {
-                                  method: 'DELETE',
-                                  headers: {
-                                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                                  },
-                                });
-                                if (response.ok) {
-                                  setProducts(products.filter(p => p._id !== product._id));
-                                } else {
-                                  setError('Failed to delete product');
-                                }
-                              } catch (err) {
-                                setError('An error occurred while deleting the product');
-                              }
-                            }}
-                            className="text-red-600 hover:text-red-900"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+          {error && (
+            <div className="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded font-proxima">
+              {error}
             </div>
+          )}
+          <div className="overflow-x-auto rounded-xl shadow ring-1 ring-black ring-opacity-5">
+            <table className="min-w-full divide-y divide-earth-200">
+              <thead className="bg-earth-100">
+                <tr>
+                  <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-earth-700 sm:pl-6">Product</th>
+                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Price</th>
+                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Style</th>
+                  <th className="px-3 py-3.5 text-left text-sm font-semibold text-earth-700">Material</th>
+                  <th className="px-3 py-3.5 text-center text-sm font-semibold text-earth-700">Favorite</th>
+                  <th className="relative py-3.5 pl-3 pr-4 sm:pr-6" />
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-earth-200 bg-white">
+                {products.map((product) => (
+                  <tr key={product._id} className="hover:bg-earth-50 transition-colors">
+                    <td className="whitespace-nowrap py-6 pl-4 pr-3 text-sm sm:pl-6 flex items-center gap-3">
+                      <img
+                        className="h-12 w-12 rounded-lg object-cover border border-earth-100 shadow-sm"
+                        src={product.images[0]}
+                        alt={product.name}
+                      />
+                      <span className="font-medium text-earth-900 font-proxima truncate max-w-[120px]">{product.name}</span>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700 font-proxima">
+                      ${product.price}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700 font-proxima">
+                      {product.style}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700 font-proxima">
+                      {product.material}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-center text-2xl">
+                      <button
+                        onClick={() => toggleFavorite(product._id, product.favorite)}
+                        className={`focus:outline-none ${product.favorite ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-600`}
+                        title={product.favorite ? 'Unfavorite' : 'Mark as favorite'}
+                      >
+                        {product.favorite ? '★' : '☆'}
+                      </button>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-right text-sm ">
+                      <button
+                        onClick={() => navigate(`/admin/products/${product._id}/edit`)}
+                        className="text-earth-600 hover:text-earth-900 font-semibold px-3 py-1 rounded transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={async () => {
+                          if (!window.confirm('Are you sure you want to delete this product?')) return;
+                          try {
+                            const response = await fetch(`${API_URL}/products/${product._id}`, {
+                              method: 'DELETE',
+                              headers: {
+                                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                              },
+                            });
+                            if (response.ok) {
+                              setProducts(products.filter(p => p._id !== product._id));
+                            } else {
+                              setError('Failed to delete product');
+                            }
+                          } catch (err) {
+                            setError('An error occurred while deleting the product');
+                          }
+                        }}
+                        className="text-red-600 hover:text-red-900 font-semibold px-3 py-1 rounded transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
         <div className="absolute right-8 bottom-8">
           <button
             onClick={handleLogout}
-            className="btn btn-secondary font-proxima"
+            className="btn btn-secondary font-proxima shadow-lg"
           >
             Log out
           </button>

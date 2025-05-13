@@ -16,23 +16,23 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-earth-300 border-b-2 border-earth-500 sticky top-0 z-50">
-      <div className="container mx-auto px-4">
+    <nav className="bg-earth-300 border-b-2 border-earth-500 sticky top-0 z-50 shadow-md">
+      <div className="container mx-auto px-6">
         <div className="flex justify-between items-center h-20">
           <div className="flex flex-col items-start">
-            <Link to="/" className="text-2xl font-normal tracking-wide text-earth-800 font-proxima">
+            <Link to="/" className="text-2xl font-bold tracking-wide text-earth-800 font-proxima">
               D-SHE
             </Link>
-            <span className="text-s text-earth-700 font-proxima">A collection of cool, cute, and casual outfits.</span>
+            <span className="text-xs text-earth-700 font-proxima mt-1">A collection of cool, cute, and casual outfits.</span>
           </div>
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-10">
             {navTabs.map(tab => (
               <Link
                 key={tab.path}
                 to={tab.path}
-                className={`text-base font-normal px-4 py-2 uppercase tracking-wide font-proxima transition-colors duration-200 border-b-2 ${
+                className={`text-base font-semibold px-4 py-2 uppercase tracking-wider font-proxima transition-colors duration-200 border-b-2 ${
                   isActive(tab.path)
-                    ? 'text-earth-700 border-earth-600 font-semibold bg-earth-100'
+                    ? 'text-earth-700 border-earth-600 bg-earth-100'
                     : 'text-earth-800 border-transparent hover:text-earth-600 hover:bg-earth-200'
                 }`}
               >

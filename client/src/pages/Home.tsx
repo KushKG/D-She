@@ -38,32 +38,43 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16">
-      <h2 className="text-3xl font-normal tracking-wide text-gray-900 mb-8 text-center font-proxima">HANDPICKED FAVORITES</h2>
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-8 pb-20">
+      <h2 className="text-2xl sm:text-3xl font-semibold tracking-wide text-earth-800 mb-12 text-center font-proxima uppercase letter-spacing-wider">
+        Handpicked Favorites
+      </h2>
       {error && (
         <div className="text-red-600 text-center mb-4 font-proxima">{error}</div>
       )}
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-earth-600"></div>
         </div>
+      ) : favorites.length === 0 ? (
+        <div className="text-center text-earth-500 font-proxima text-lg">No favorites yet. Check back soon!</div>
       ) : (
-        <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {favorites.map((product) => (
             <Link key={product._id} to={`/products/${product._id}`} className="group block focus:outline-none">
-              <div className="w-full aspect-[3/4] bg-gray-50 overflow-hidden">
-                <img
-                  src={product.images[0]?.startsWith('http') ? product.images[0] : `${API_URL}/${product.images[0]}` || 'https://placehold.co/400x500'}
-                  alt={product.name}
-                  className="w-full h-full object-cover object-center group-hover:opacity-75 transition-opacity duration-200"
-                />
-              </div>
-              <div className="mt-4 space-y-1">
-                <h3 className="text-sm font-normal text-gray-900 font-proxima">
-                  {product.name}
-                </h3>
-                <p className="text-sm text-gray-500 font-proxima">{product.style}</p>
-                <p className="text-sm font-normal text-gray-900 font-proxima">${product.price}</p>
+              <div className="relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-200 overflow-hidden">
+                <div className="w-full aspect-[3/4] bg-earth-100 overflow-hidden flex items-center justify-center">
+                  <img
+                    src={product.images[0]?.startsWith('http') ? product.images[0] : `${API_URL}/${product.images[0]}` || 'https://placehold.co/400x500'}
+                    alt={product.name}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-200"
+                  />
+                  {product.favorite && (
+                    <span className="absolute top-3 right-3 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow font-proxima">
+                      ★ Favorite
+                    </span>
+                  )}
+                </div>
+                <div className="p-4 space-y-2">
+                  <h3 className="text-lg font-semibold text-earth-800 font-proxima truncate">
+                    {product.name}
+                  </h3>
+                  <p className="text-sm text-earth-500 font-proxima truncate">{product.style}</p>
+                  <p className="text-base font-bold text-earth-700 font-proxima">${product.price}</p>
+                </div>
               </div>
             </Link>
           ))}
