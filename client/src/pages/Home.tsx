@@ -9,10 +9,11 @@ interface Product {
   images: string[];
   style: string;
   description: string;
+  favorite?: boolean;
 }
 
 const Home = () => {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [favorites, setFavorites] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -22,7 +23,7 @@ const Home = () => {
         const response = await fetch(`${API_URL}/products`);
         if (response.ok) {
           const data = await response.json();
-          setFeaturedProducts(data.slice(0, 4));
+          setFavorites(data.filter((p: Product) => p.favorite));
         } else {
           setError('Failed to fetch products');
         }
@@ -48,7 +49,7 @@ const Home = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {featuredProducts.map((product) => (
+          {favorites.map((product) => (
             <Link key={product._id} to={`/products/${product._id}`} className="group block focus:outline-none">
               <div className="w-full aspect-[3/4] bg-gray-50 overflow-hidden">
                 <img

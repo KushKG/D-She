@@ -14,6 +14,7 @@ export interface IProduct extends mongoose.Document {
   style: 'Indian' | 'Western' | 'Indo Western';
   tags: string[];
   material: string;
+  favorite: boolean;
 }
 
 const productSchema = new mongoose.Schema({
@@ -71,6 +72,10 @@ const productSchema = new mongoose.Schema({
   material: {
     type: String,
     required: true,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
   },
 }, {
   timestamps: true,

@@ -8,7 +8,7 @@ const Navbar = () => {
     { path: '/indo-western', label: 'Indo Western' },
     { path: '/western', label: 'Western' },
     { path: '/indian', label: 'Indian' },
-    { path: '/admin', label: 'Admin' },
+    // { path: '/admin', label: 'Admin' },
   ];
 
   const isActive = (path: string) => {

@@ -205,4 +205,22 @@ router.delete('/:id', auth, async (req: Request, res: Response) => {
   }
 });
 
+// PATCH /api/products/:id/favorite
+router.patch('/:id/favorite', auth, async (req: Request, res: Response) => {
+  try {
+    const { favorite } = req.body;
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { favorite },
+      { new: true }
+    );
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating favorite status' });
+  }
+});
+
 export default router; 

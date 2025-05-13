@@ -10,6 +10,7 @@ interface Product {
   style: string;
   material: string;
   description: string;
+  favorite: boolean;
 }
 
 const AdminDashboard = () => {
@@ -82,6 +83,27 @@ const AdminDashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
+  };
+
+  const toggleFavorite = async (productId: string, currentFavorite: boolean) => {
+    try {
+      const response = await fetch(`${API_URL}/products/${productId}/favorite`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ favorite: !currentFavorite }),
+      });
+      if (response.ok) {
+        const updatedProduct = await response.json();
+        setProducts(products => products.map(p => p._id === productId ? updatedProduct : p));
+      } else {
+        setError('Failed to update favorite status');
+      }
+    } catch (err) {
+      setError('An error occurred while updating favorite status');
+    }
   };
 
   if (!isAuthenticated) {
@@ -195,7 +217,14 @@ const AdminDashboard = () => {
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-earth-700">
                           {product.material}
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm font-medium">
+                        <td className="whitespace-nowrap px-3 py-4 text-right text-sm font-medium flex items-center justify-end space-x-2">
+                          <button
+                            onClick={() => toggleFavorite(product._id, product.favorite)}
+                            className={`mr-2 text-2xl focus:outline-none ${product.favorite ? 'text-yellow-500' : 'text-gray-400'} hover:text-yellow-600`}
+                            title={product.favorite ? 'Unfavorite' : 'Mark as favorite'}
+                          >
+                            {product.favorite ? '★' : '☆'}
+                          </button>
                           <button
                             onClick={() => navigate(`/admin/products/${product._id}/edit`)}
                             className="text-earth-600 hover:text-earth-900 mr-4"
