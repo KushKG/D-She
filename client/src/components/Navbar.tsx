@@ -66,7 +66,10 @@ const Navbar = () => {
             <button
               aria-label="Open menu"
               className="p-2 rounded focus:outline-none focus:ring-2 focus:ring-earth-600"
-              onClick={() => setMenuOpen((open) => !open)}
+              onClick={e => {
+                e.stopPropagation();
+                setMenuOpen(open => !open);
+              }}
             >
               <svg
                 className="h-7 w-7 text-earth-800"
